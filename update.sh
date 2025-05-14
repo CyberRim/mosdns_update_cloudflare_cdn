@@ -202,10 +202,10 @@ fi
 if [[ ${is_restart_mosdns} -eq 0 ]]; then
     ${restart_mosdns_cmd}
     if [ $? -ne 0 ]; then
-        echo "restart mosdns error,check the resatart command"
-        echo "restart command: ${restart_mosdns_cmd}"
+        log "restart mosdns error,check the resatart command"
+        log "restart command: ${restart_mosdns_cmd}"
         exit 1
     fi
-    echo "restart mosdns success"
+    log "restart mosdns success"
     exit 0
 fi
