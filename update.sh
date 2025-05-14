@@ -73,7 +73,7 @@ test_ip() {
     else
         opt="${opt} -ip $1"
     fi
-    ${cloudflare_speed_test_cmd} -f "$1" ${opt} 2>/dev/null
+    ${cloudflare_speed_test_cmd} ${opt} 2>/dev/null
 }
 
 test_fastest_ip() {
