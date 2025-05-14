@@ -67,13 +67,20 @@ format_test_reslut() {
 }
 
 test_ip() {
-    local opt="-url ${TEST_URL} -tl ${LATENCY_THRESHOLD} -sl ${SPEED_THRESHOLD}  -dn 1 -p 1 -o \"\" "
+    local opt=(
+        -url "${TEST_URL}"
+        -tl "${LATENCY_THRESHOLD}"
+        -sl "${SPEED_THRESHOLD}"
+        -dn 1
+        -p 1
+        -o ""
+    )
     if [[ -f $1 ]]; then
-        opt="${opt} -f $1"
+        opt+=(-f "$1")
     else
-        opt="${opt} -ip $1"
+        opt+=(-f "$1")
     fi
-    ${cloudflare_speed_test_cmd} ${opt} 2>/dev/null
+    "${cloudflare_speed_test_cmd}" "${opt[@]}" 2>/dev/null
 }
 
 test_fastest_ip() {
