@@ -15,8 +15,8 @@
 
 ### 使用方法：
 
-1. 部署 mosdns
-2. 部署 CloudflareSpeedTest
+1. 部署 [mosdns](https://github.com/IrineSistiana/mosdns)
+2. 部署 [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
 3. 修改脚本中 ipset_ipv4_file 变量，值为 CloudflareSpeedTest 项目中的 ip.txt 文件路径
    修改脚本中 ipset_ipv6_file 变量，值为 CloudflareSpeedTest 项目中的 ipv6.txt 文件路径
    修改脚本中 cloudflare_speed_test_cmd 变量，值为 CloudflareSpeedTest 项目中 CloudflareST 可执行文件路径
