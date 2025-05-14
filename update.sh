@@ -78,7 +78,7 @@ test_ip() {
     if [[ -f $1 ]]; then
         opt+=(-f "$1")
     else
-        opt+=(-f "$1")
+        opt+=(-ip "$1")
     fi
     "${cloudflare_speed_test_cmd}" "${opt[@]}" 2>/dev/null
 }
