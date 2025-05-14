@@ -1,9 +1,9 @@
 ## Mosdns update Cloudflare CDN
 
-此脚本用于更新 mosdns 配置文件中的 Cloudflare CDN IP，详见https://github.com/XIU2/CloudflareSpeedTest/discussions/317
-适用 mosdns 版本：v5，先前版本不兼容，可能需要修改一定的正则表达式
-适用 CloudflareSpeedTest 版本：v2.2.5，先前版本未测试
-脚本测试环境：debian12，其他 linux 发行版未测试
+- 此脚本用于更新 mosdns 配置文件中的 Cloudflare CDN IP，详见https://github.com/XIU2/CloudflareSpeedTest/discussions/317
+- 适用 mosdns 版本：v5，先前版本不兼容，可能需要修改一定的正则表达式
+- 适用 CloudflareSpeedTest 版本：v2.2.5，先前版本未测试
+- 脚本测试环境：debian12，其他 linux 发行版未测试
 
 ### 脚本工作流程：
 
