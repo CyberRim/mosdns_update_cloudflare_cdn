@@ -220,7 +220,7 @@ if [[ $? -eq 0 ]]; then
 fi
 
 if [[ ${is_restart_mosdns} -eq 0 ]]; then
-    ${restart_mosdns_cmd}
+    bash -c "${restart_mosdns_cmd}"
     if [ $? -ne 0 ]; then
         log "restart mosdns error,check the resatart command"
         log "restart command: ${restart_mosdns_cmd}"
