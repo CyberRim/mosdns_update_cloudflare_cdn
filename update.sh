@@ -17,21 +17,16 @@
 #
 # 1. 部署mosdns
 # 2. 部署CloudflareSpeedTest
-# 3. 修改脚本中ipset_ipv4_file变量，值为CloudflareSpeedTest项目中的ip.txt文件路径
-#    修改脚本中ipset_ipv6_file变量，值为CloudflareSpeedTest项目中的ipv6.txt文件路径
-#    修改脚本中cloudflare_speed_test_cmd变量，值为CloudflareSpeedTest项目中CloudflareST可执行文件路径
-#    修改脚本中mosdns_config_file变量，值为mosdns项目中的配置文件路径
-#    修改脚本中restart_mosdns_cmd变量，值为重启mosdns的命令
+# 3. 根据根目录下的配置文件default.config修改配置
+#    ipset_ipv4_file：CloudflareSpeedTest项目中的ip.txt文件路径
+#    ipset_ipv6_file：为CloudflareSpeedTest项目中的ipv6.txt文件路径
+#    cloudflare_speed_test_cmd：CloudflareSpeedTest项目中CloudflareST可执行文件路径
+#    mosdns_config_file：mosdns项目中的配置文件路径
+#    restart_mosdns_cmd：重启mosdns的命令
+#    log_file：日志文件路径
 # 4. 编写mosdns配置文件，写法参考https://github.com/XIU2/CloudflareSpeedTest/discussions/317#discussioncomment-5824217
 # 5. 为mosdns配置文件中的exec：black_hole 这一行的末尾加上#tag::cloudflare_cdn_fastest_ip的注释
 # 6. 执行脚本。需要定时任务可自行编写crontab或systemd的timer
-
-ipset_ipv4_file="./ip.txt"                    # ipv4 ipset文件，来源CloudflareSpeedTest项目
-ipset_ipv6_file="./ipv6.txt"                  # ipv6 ipset文件，来源CloudflareSpeedTest项目
-cloudflare_speed_test_cmd="./CloudflareST"    # 执行CloudflareST的命令，来源CloudflareSpeedTest项目
-mosdns_config_file="./config.yaml"            # mosdns配置文件，来源mosdns项目
-restart_mosdns_cmd="systemctl restart mosdns" # 重启mosdns的命令，如果你使用其他方式重启mosdns，请修改这行
-log_file="./update.log"                       # 日志文件，脚本运行日志会输出到此文件中
 
 LATENCY_THRESHOLD=200                                                                # 延迟下限，为整数，单位ms，详见CloudflareST的-tl参数
 SPEED_THRESHOLD=3                                                                    # 速度下限，为正数，单位Mbps，详见CloudflareST的-sl参数
@@ -44,6 +39,22 @@ ipv6_pattern="((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:)
 
 log() {
     echo "$1" | sed -E "s/^/[$(date +%Y-%m-%d\ %H:%M:%S)]/" | tee -a "${log_file}" >/dev/stderr
+}
+
+config() {
+    local default_config_file="./default.config"
+    local config_file_list=(
+        "${default_config_file}"
+    )
+    IFS=$'\n' config_file_list+=($(find ./ -maxdepth 1 -type f -regex '^.*\.config$' | grep -v -E "^${default_config_file//\./\\.}$" | sort))
+    for config_file in "${config_file_list[@]}"; do
+        if [[ -f "$config_file" ]]; then
+            source "$config_file"
+            log "Loaded config file: $config_file"
+        else
+            log "Config file $config_file does not exist."
+        fi
+    done
 }
 
 format_ip_from_test_result() {
@@ -188,9 +199,10 @@ make_sure_mosdns_config_file_right() {
     fi
 }
 
-log "start update Cloudflare CDN fastest IP"
 root_dir="$(cd "$(dirname "$0")" && pwd)"
 cd "${root_dir}"
+config
+log "start update Cloudflare CDN fastest IP"
 log "pwd:$(pwd)"
 
 is_restart_mosdns=1

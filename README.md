@@ -17,11 +17,13 @@
 
 1. 部署 [mosdns](https://github.com/IrineSistiana/mosdns)
 2. 部署 [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
-3. 修改脚本中 ipset_ipv4_file 变量，值为 CloudflareSpeedTest 项目中的 ip.txt 文件路径
-   修改脚本中 ipset_ipv6_file 变量，值为 CloudflareSpeedTest 项目中的 ipv6.txt 文件路径
-   修改脚本中 cloudflare_speed_test_cmd 变量，值为 CloudflareSpeedTest 项目中 CloudflareST 可执行文件路径
-   修改脚本中 mosdns_config_file 变量，值为 mosdns 项目中的配置文件路径
-   修改脚本中 restart_mosdns_cmd 变量，值为重启 mosdns 的命令
+3. 根据根目录下的配置文件default.config修改配置
+   ipset_ipv4_file：CloudflareSpeedTest项目中的ip.txt文件路径
+   ipset_ipv6_file：CloudflareSpeedTest项目中的ipv6.txt文件路径
+   cloudflare_speed_test_cmd：CloudflareSpeedTest项目中CloudflareST可执行文件路径
+   mosdns_config_file：mosdns项目中的配置文件路径
+   restart_mosdns_cmd：重启mosdns的命令
+   log_fileb：日志文件路径
 4. 编写 mosdns 配置文件，写法参考https://github.com/XIU2/CloudflareSpeedTest/discussions/317#discussioncomment-5824217
 5. 为 mosdns 配置文件中的 exec：black_hole 这一行的末尾加上#tag::cloudflare_cdn_fastest_ip 的注释
 6. 执行脚本。需要定时任务可自行编写 crontab 或 systemd 的 timer
