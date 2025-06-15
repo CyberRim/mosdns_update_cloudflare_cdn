@@ -85,10 +85,10 @@ test_ip() {
         -dn 1
         -p 1
     )
-    if [[ -f $1 ]]; then
-        opt+=(-f "$1")
-    else
+    if [[ "$1" =~ ${ipv4_pattern} || "$1" =~ ${ipv6_pattern} ]]; then
         opt+=(-ip "$1")
+    else
+        opt+=(-f "$1")
     fi
     if [[ -n ${cloudflare_speed_test_remote_host} ]]; then
         opt+=(-o \"\")
