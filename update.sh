@@ -93,11 +93,14 @@ test_ip() {
     fi
     if [[ -n ${cloudflare_speed_test_remote_host} ]]; then
         opt+=(-o \"\")
+        log "ssh to ${cloudflare_speed_test_remote_host} with command: ${cloudflare_speed_test_cmd} ${opt[*]}"
         ssh -o BatchMode=yes "${cloudflare_speed_test_remote_host}" "${cloudflare_speed_test_cmd}" "${opt[@]}" 2>/dev/null
         [[ "$?" -ne 0 ]] && log "ssh to ${cloudflare_speed_test_remote_host} failed, check the remote host and publickey"
     else
         opt+=(-o "")
+        log "running command: ${cloudflare_speed_test_cmd} ${opt[*]}"
         "${cloudflare_speed_test_cmd}" "${opt[@]}" 2>/dev/null
+        [[ "$?" -ne 0 ]] && log "run command ${cloudflare_speed_test_cmd} failed, check the command and parameters"
     fi
 }
 
