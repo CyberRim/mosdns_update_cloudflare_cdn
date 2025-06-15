@@ -132,7 +132,7 @@ is_ip_good() {
     if [[ "${latency}" -gt "${LATENCY_THRESHOLD}" || "${speed}" -lt "${SPEED_THRESHOLD}" ]]; then
         return 1
     else
-        log "ip is good"
+        log "${ip} is good"
         return 0
     fi
 }
