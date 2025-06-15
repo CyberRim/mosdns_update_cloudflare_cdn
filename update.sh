@@ -84,14 +84,20 @@ test_ip() {
         -sl "${SPEED_THRESHOLD}"
         -dn 1
         -p 1
-        -o ""
     )
     if [[ -f $1 ]]; then
         opt+=(-f "$1")
     else
         opt+=(-ip "$1")
     fi
-    "${cloudflare_speed_test_cmd}" "${opt[@]}" 2>/dev/null
+    if [[ -n ${cloudflare_speed_test_remote_host} ]]; then
+        opt+=(-o \"\")
+        ssh -o BatchMode=yes "${cloudflare_speed_test_remote_host}" "${cloudflare_speed_test_cmd}" "${opt[@]}" 2>/dev/null
+        [[ "$?" -ne 0 ]] && log "ssh to ${cloudflare_speed_test_remote_host} failed, check the remote host and publickey"
+    else
+        opt+=(-o "")
+        "${cloudflare_speed_test_cmd}" "${opt[@]}" 2>/dev/null
+    fi
 }
 
 test_fastest_ip() {
