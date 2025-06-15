@@ -212,7 +212,7 @@ make_sure_mosdns_config_file_right() {
 root_dir="$(cd "$(dirname "$0")" && pwd)"
 cd "${root_dir}"
 config
-log "start update Cloudflare CDN fastest IP"
+log "update Cloudflare CDN fastest IP start"
 log "pwd:$(pwd)"
 
 is_restart_mosdns=1
@@ -237,5 +237,9 @@ if [[ ${is_restart_mosdns} -eq 0 ]]; then
         exit 1
     fi
     log "restart mosdns success"
+    log "update Cloudflare CDN fastest IP finished"
     exit 0
 fi
+
+log "no need to update"
+log "update Cloudflare CDN fastest IP finished"
