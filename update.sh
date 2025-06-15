@@ -47,7 +47,7 @@ config() {
         "${default_config_file}"
     )
     # IFS=$'\n' config_file_list+=($(find ./ -maxdepth 1 -type f -regex '^.*\.config$' | grep -v -E "^${default_config_file//\./\\.}$" | sort))
-    mapfile -t -O ${#config_file_list[@]} config_file_list < <(find ./ -maxdepth 1 -type f -regex '^.*\.config$' | grep -v -E "^${default_config_file//\./\\.}$" | sort)
+    mapfile -t -O ${#config_file_list[@]} config_file_list < <(find ./ -maxdepth 1 -type f -regex '^.*\.config$' | grep -v -E "^${default_config_file//\./\\.}$" | sort -r)
     for config_file in "${config_file_list[@]}"; do
         if [[ -f "$config_file" ]]; then
             source "$config_file"
