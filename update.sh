@@ -1,3 +1,4 @@
+#!/bin/bash
 # ## Mosdns update Cloudflare CDN
 #
 # 此脚本用于更新mosdns配置文件中的Cloudflare CDN IP，详见https://github.com/XIU2/CloudflareSpeedTest/discussions/317
