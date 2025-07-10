@@ -31,7 +31,6 @@
 
 LATENCY_THRESHOLD=200                                                                # 延迟下限，为整数，单位ms，详见CloudflareST的-tl参数
 SPEED_THRESHOLD=3                                                                    # 速度下限，为正数，单位Mbps，详见CloudflareST的-sl参数
-TEST_URL="https://cdn.cloudflare.steamstatic.com/steam/apps/256843155/movie_max.mp4" # 测速链接，如测速出现0.00，请换其他链接，详见https://github.com/XIU2/CloudflareSpeedTest/issues/168
 
 TAG_STRING="#tag::cloudflare_cdn_fastest_ip"
 
